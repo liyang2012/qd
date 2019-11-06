@@ -25,9 +25,9 @@ spring:
     job-store-type: JDBC
   datasource:
     name: duck_td
-    url: jdbc:mysql://192.168.31.81:3306/qd?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&allowMultiQueries=true
-    username: test
-    password: test
+    url: jdbc:mysql://localhost:3306/qd?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&allowMultiQueries=true
+    username: root
+    password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
   freemarker:
@@ -53,6 +53,6 @@ server:
 logging:
   level:
     ROOT: info
-
+  file: qd.log
 
 

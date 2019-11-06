@@ -85,6 +85,7 @@ public class QdApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(QdApplication.class, args);
+
 	}
 
 }

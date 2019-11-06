@@ -1,8 +1,6 @@
 package cn.com.myproject.qd.config;
 
-import cn.com.myproject.qd.job.LoginJob;
-import cn.com.myproject.qd.job.QdJob;
-import cn.com.myproject.qd.job.TestJob;
+import cn.com.myproject.qd.job.*;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +28,7 @@ public class QuartzConfig {
         logger.info("执行quartz");
 
         JobDetail job = JobBuilder.newJob(QdJob.class).withIdentity("q1", "d1").withDescription("抢单").build();
-        Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19 10 * * ?")
+        Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q1", "d1")
                 .build();
@@ -41,7 +39,7 @@ public class QuartzConfig {
 
 
         job = JobBuilder.newJob(LoginJob.class).withIdentity("q2", "d2").withDescription("登录").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15 10 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 16 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q2", "d2")
                 .build();
@@ -64,7 +62,7 @@ public class QuartzConfig {
         }
 
         job = JobBuilder.newJob(QdJob.class).withIdentity("q4", "d4").withDescription("抢单下午").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19 17 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 17 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q4", "d4")
                 .build();
@@ -74,8 +72,8 @@ public class QuartzConfig {
         }
 
 
-        job = JobBuilder.newJob(LoginJob.class).withIdentity("q5", "d5").withDescription("登录下午").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15 17 * * ?")
+        job = JobBuilder.newJob(Login1Job.class).withIdentity("q5", "d5").withDescription("登录下午").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 17 17 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q5", "d5")
                 .build();
@@ -84,7 +82,26 @@ public class QuartzConfig {
             scheduler.scheduleJob(job, trigger);
         }
 
+        job = JobBuilder.newJob(QdJob.class).withIdentity("q6", "d6").withDescription("抢单晚上").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19 20 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q6", "d6")
+                .build();
 
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+
+        job = JobBuilder.newJob(Login2Job.class).withIdentity("q7", "d7").withDescription("登录晚上").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15 20 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q7", "d7")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
     }
 
 

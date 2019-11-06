@@ -42,6 +42,7 @@ public class QdServiceImpl implements IQdService{
             }
         }
         if(goodsId == 59) {
+            logger.info("没有获取到商品");
             return;
         }
         //获取商品详情
