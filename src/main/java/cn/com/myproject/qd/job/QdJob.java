@@ -34,6 +34,11 @@ public class QdJob implements Job {
             String[] strs = map.get(str);
             qdService.qd(strs[0],Integer.parseInt(strs[1]));
         }
+        try {
+            Thread.sleep(400L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //再试一次
         for(String str:map.keySet()) {
             String[] strs = map.get(str);

@@ -39,7 +39,7 @@ public class QuartzConfig {
 
 
         job = JobBuilder.newJob(LoginJob.class).withIdentity("q2", "d2").withDescription("登录").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 16 10 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15,17 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q2", "d2")
                 .build();
@@ -73,7 +73,7 @@ public class QuartzConfig {
 
 
         job = JobBuilder.newJob(Login1Job.class).withIdentity("q5", "d5").withDescription("登录下午").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 17 17 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15,17 17 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q5", "d5")
                 .build();
@@ -83,7 +83,7 @@ public class QuartzConfig {
         }
 
         job = JobBuilder.newJob(QdJob.class).withIdentity("q6", "d6").withDescription("抢单晚上").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19 20 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 20 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q6", "d6")
                 .build();
@@ -94,7 +94,7 @@ public class QuartzConfig {
 
 
         job = JobBuilder.newJob(Login2Job.class).withIdentity("q7", "d7").withDescription("登录晚上").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15 20 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15,17 20 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q7", "d7")
                 .build();
