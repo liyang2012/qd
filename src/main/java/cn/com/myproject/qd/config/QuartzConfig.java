@@ -102,6 +102,37 @@ public class QuartzConfig {
         if (scheduler.getJobDetail(job.getKey()) == null) {
             scheduler.scheduleJob(job, trigger);
         }
+
+
+        job = JobBuilder.newJob(Qd298Job.class).withIdentity("q2981", "d2981").withDescription("抢单298_1").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 0,1,2 8 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q2981", "d2981")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+        job = JobBuilder.newJob(Qd298Job.class).withIdentity("q2982", "d2982").withDescription("抢单298_2").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 59 7 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q2982", "d2982")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+        job = JobBuilder.newJob(Login298Job.class).withIdentity("q2980", "d2980").withDescription("登录298").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 55,57 7 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q2980", "d2980")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
     }
 
 

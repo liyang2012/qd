@@ -8,14 +8,15 @@ import java.util.Set;
 
 public class D {
     public static void main(String[] args) throws IOException {
-        int a=0;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        char ch ;
-        while ((a = br.read()) != -1) {
-            ch = (char) a;
-            System.out.print(ch);
-        }
-
+      for(int i=0;i<10;i++) {
+          System.out.println("i:"+i);
+          for(int j=0;j<20;j++) {
+              System.out.println("j:"+j);
+              if(j==5) {
+                  break;
+              }
+          }
+      }
     }
 
 

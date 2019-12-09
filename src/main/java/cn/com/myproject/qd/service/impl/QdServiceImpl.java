@@ -81,7 +81,7 @@ public class QdServiceImpl implements IQdService{
         postData.put("info_type", info_type);
         postData.put("token", token);
         entity = restTemplate.postForEntity(url, postData, String.class);
-        logger.info("返回日志：{},{}",token,entity.getBody());
-        logger.info("耗时：{}",System.currentTimeMillis()-l);
+        logger.info("返回日志：{},{},{}",token,entity.getBody(),System.currentTimeMillis()-l);
+
     }
 }
