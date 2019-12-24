@@ -30,6 +30,9 @@ public class QdJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("抢单job开始");
         Map<String,String[]> map = Token.get();
+        if(map == null || map.isEmpty()) {
+            return;
+        }
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
             qdService.qd(strs[0],Integer.parseInt(strs[1]));
@@ -37,7 +40,7 @@ public class QdJob implements Job {
         try {
             Thread.sleep(200L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("",e);
         }
         //再试一次
         for(String str:map.keySet()) {
@@ -47,7 +50,7 @@ public class QdJob implements Job {
         try {
             Thread.sleep(200L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("",e);
         }
         //再试一次
         for(String str:map.keySet()) {
@@ -57,7 +60,7 @@ public class QdJob implements Job {
         try {
             Thread.sleep(200L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("",e);
         }
         //再试一次
         for(String str:map.keySet()) {

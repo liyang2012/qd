@@ -31,6 +31,9 @@ public class Qd298Job implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("抢单job开始");
         Map<String,String[]> map = Token.get();
+        if(map == null || map.isEmpty()) {
+            return;
+        }
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
             qd298Service.qd(strs[0],Integer.parseInt(strs[1]));
@@ -38,7 +41,7 @@ public class Qd298Job implements Job {
         try {
             Thread.sleep(400L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("",e);
         }
         //再试一次
         for(String str:map.keySet()) {

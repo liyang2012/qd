@@ -28,7 +28,7 @@ public class QuartzConfig {
         logger.info("执行quartz");
 
         JobDetail job = JobBuilder.newJob(QdJob.class).withIdentity("q1", "d1").withDescription("抢单").build();
-        Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 10 * * ?")
+        Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20,21,22 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q1", "d1")
                 .build();
@@ -42,6 +42,16 @@ public class QuartzConfig {
         trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 15,17 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q2", "d2")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+        job = JobBuilder.newJob(LoginNotJob.class).withIdentity("q2-1", "d2-1").withDescription("判断是否登录上午").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("50 17 10 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q2-1", "d2-1")
                 .build();
 
         if (scheduler.getJobDetail(job.getKey()) == null) {
@@ -62,7 +72,7 @@ public class QuartzConfig {
         }
 
         job = JobBuilder.newJob(QdJob.class).withIdentity("q4", "d4").withDescription("抢单下午").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 17 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20,21 17 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q4", "d4")
                 .build();
@@ -81,6 +91,7 @@ public class QuartzConfig {
         if (scheduler.getJobDetail(job.getKey()) == null) {
             scheduler.scheduleJob(job, trigger);
         }
+
 
         job = JobBuilder.newJob(QdJob.class).withIdentity("q6", "d6").withDescription("抢单晚上").build();
         trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("* 18,19,20 20 * * ?")

@@ -2,7 +2,6 @@ package cn.com.myproject.qd.service.impl;
 
 import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.service.IQd298Service;
-import cn.com.myproject.qd.service.IQdService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +30,7 @@ public class Qd298ServiceImpl implements IQd298Service{
         JSONObject postData = null;
         ResponseEntity<String> entity = null;
         Integer addressId = 0;
-        Integer goodsPrice = 290;
+        Integer goodsPrice = 298;
         if(Passwd.goodsId298.get()==-999) {
             url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList";
             for(int i=1;i<6;i++) {
@@ -44,33 +43,33 @@ public class Qd298ServiceImpl implements IQd298Service{
                 logger.info("没有获取到商品，{}",System.currentTimeMillis()-l);
                 return;
             }
-            //获取商品详情
-            url = "http://www.xtxbc.com/app/user/getConfirmOrderPageInfos";
-            postData = new JSONObject();
-            postData.put("token", token);
-            postData.put("goods_id",  "[{\"id\":"+Passwd.goodsId298.get()+",\"num\":"+1+"}]");
-            postData.put("info_type", "goods");
-            postData.put("address_id", "");
-            postData.put("spec_id", "0");
-            entity = restTemplate.postForEntity(url, postData, String.class);
-            JSONObject jo1 = JSON.parseObject(entity.getBody()).getJSONObject("data");
 
-            try {
-                addressId = jo1.getJSONObject("address").getInteger("address_id");
-
-            }catch (Exception e){
-                logger.info("解析详情错误");
-            }
-            logger.info("addressId={}",addressId);
         }else {
             logger.info("已获取属性，直接下单...................");
         }
+       //获取商品详情
+        url = "http://www.xtxbc.com/app/user/getConfirmOrderPageInfos";
+        postData = new JSONObject();
+        postData.put("token", token);
+        postData.put("goods_id",  "[{\"id\":"+ Passwd.goodsId298.get()+",\"num\":"+num+"}]");
+        postData.put("info_type", "goods");
+        postData.put("address_id", "");
+        postData.put("spec_id", "0");
+        entity = restTemplate.postForEntity(url, postData, String.class);
+        JSONObject jo1 = JSON.parseObject(entity.getBody()).getJSONObject("data");
 
+        try {
+            addressId = jo1.getJSONObject("address").getInteger("address_id");
+
+        }catch (Exception e){
+            logger.info("解析详情错误",e);
+        }
+        logger.info("addressId={}",addressId);
         //下单
         url = "http://www.xtxbc.com/app/user/generateOrderAndToBePaids";
         postData = new JSONObject();
         postData.put("key_id", "0");
-        postData.put("goods_id", "[{\"id\":"+Passwd.goodsId298.get()+",\"num\":"+1+"}]");
+        postData.put("goods_id", "[{\"id\":"+ Passwd.goodsId298.get()+",\"num\":"+num+"}]");
         postData.put("fast_price", "0");
         postData.put("fast_pay", goodsPrice+".00");
         postData.put("coupon_price", "0");

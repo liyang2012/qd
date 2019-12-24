@@ -27,7 +27,8 @@ spring:
     name: duck_td
     url: jdbc:mysql://localhost:3306/qd?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&allowMultiQueries=true
     username: root
-    password: 123456
+    #password: 123456
+    password: Aa123456.
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
   freemarker:
@@ -54,5 +55,16 @@ logging:
   level:
     ROOT: info
   file: qd.log
+
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  config-location: classpath:mybatis-config.xml
+pagehelper:
+  params: pageNum=pageNumKey;pageSize=pageSizeKey;count=countSql
+  helperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  page-size-zero: true
 
 
