@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -40,6 +41,9 @@ public class LoginJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("执行登录job..............");
+        Passwd.goodsId = new AtomicInteger(-999);
+        Passwd.promType = new AtomicInteger(-999);
+        Passwd.specId = new AtomicInteger(-999);
         Token.clear();
         List<User> list = userService.getAll(2);
         for(User user:list) {
