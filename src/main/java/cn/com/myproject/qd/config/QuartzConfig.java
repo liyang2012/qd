@@ -48,6 +48,30 @@ public class QuartzConfig {
             scheduler.scheduleJob(job, trigger);
         }
 
+
+
+        job = JobBuilder.newJob(SearchJob.class).withIdentity("q-s", "d-s").withDescription("获取商品").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("*/5 18,19,20,21,22 10,17 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q-s", "d-s")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+
+        job = JobBuilder.newJob(LoginSearchJob.class).withIdentity("q-s-1", "d-s-1").withDescription("登录").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 10,13 10,17 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q-s-1", "d-s-1")
+                .build();
+
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
+
+
         job = JobBuilder.newJob(LoginNotJob.class).withIdentity("q2-1", "d2-1").withDescription("判断是否登录上午").build();
         trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("50 17 10 * * ?")
                 .withMisfireHandlingInstructionDoNothing())

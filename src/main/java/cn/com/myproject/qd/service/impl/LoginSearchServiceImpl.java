@@ -1,7 +1,8 @@
 package cn.com.myproject.qd.service.impl;
 
-import cn.com.myproject.qd.constant.Token;
-import cn.com.myproject.qd.service.ILoginService;
+
+import cn.com.myproject.qd.constant.TokenS;
+import cn.com.myproject.qd.service.ILoginSearchService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -20,23 +21,17 @@ import org.springframework.web.client.RestTemplate;
  * @author ly
  */
 @Service
-public class LoginServiceImpl implements ILoginService {
-    private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
+public class LoginSearchServiceImpl implements ILoginSearchService {
+    private static final Logger logger = LoggerFactory.getLogger(LoginSearchServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @Async("asyncLoginServiceExecutor")
+    @Async("asyncLoginSearchServiceExecutor")
     @Override
     public void login(String phone, String passwd,String num) {
         long l = System.currentTimeMillis();
         String url = "http://www.xtxbc.com/app/reg/login";
-//        JSONObject postData = new JSONObject();
-//        postData.put("password", passwd);
-//        postData.put("phone", phone);
-//        postData.put("registration_id", "");
-//        postData.put("device_type", "ios");
-
 
         MultiValueMap<String,String> map = new LinkedMultiValueMap<String, String>();
         map.set("password", passwd);
@@ -57,7 +52,7 @@ public class LoginServiceImpl implements ILoginService {
         if(jo.getString("code").equals("success")){
             //获取token
             String token = jo.getString("data");
-            Token.put(phone,token,num);
+            TokenS.put(phone,token,num);
         }else{
             logger.info("登录失败，{}",phone);
         }

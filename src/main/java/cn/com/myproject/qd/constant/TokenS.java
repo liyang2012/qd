@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Token {
-    private static final Logger logger = LoggerFactory.getLogger(Token.class);
+public class TokenS {
+    private static final Logger logger = LoggerFactory.getLogger(TokenS.class);
     private static ConcurrentHashMap<String,String[]> map = new ConcurrentHashMap<>(64);
     public static void put(String phone,String token,String num){
         map.put(phone,new String[]{token,num});
