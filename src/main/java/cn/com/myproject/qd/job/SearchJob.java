@@ -33,11 +33,12 @@ public class SearchJob implements Job {
         if(map == null || map.isEmpty()) {
             return;
         }
+        logger.info("查询账号总数，{}",map.size());
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
             searchService.qd(strs[0]);
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 logger.error("----",e);
             }

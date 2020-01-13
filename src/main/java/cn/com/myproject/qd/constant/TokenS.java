@@ -10,7 +10,7 @@ public class TokenS {
     private static ConcurrentHashMap<String,String[]> map = new ConcurrentHashMap<>(64);
     public static void put(String phone,String token,String num){
         map.put(phone,new String[]{token,num});
-        logger.info("登录token添加{},{},{}",phone,token,num);
+        logger.info("登录s token添加{},{},{}",phone,token,num);
 
     }
 

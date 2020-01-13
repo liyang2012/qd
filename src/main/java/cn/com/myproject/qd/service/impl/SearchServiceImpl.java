@@ -32,13 +32,11 @@ public class SearchServiceImpl implements ISearchService {
     public void qd(String token) {
         long l = System.currentTimeMillis();
         String url;
-//        JSONObject postData;
+
         ResponseEntity<String> entity = null;
         if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
             url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList";
-//            postData = new JSONObject();
-//            postData.put("page", 1);
-//            postData.put("category_id", -3);
+
 
             MultiValueMap<String,String> map = new LinkedMultiValueMap<String, String>();
             map.set("page", "1");

@@ -51,7 +51,7 @@ public class QuartzConfig {
 
 
         job = JobBuilder.newJob(SearchJob.class).withIdentity("q-s", "d-s").withDescription("获取商品").build();
-        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("*/5 18,19,20,21,22 10,17 * * ?")
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("*/2 18,19,20,21,22 10,17 * * ?")
                 .withMisfireHandlingInstructionDoNothing())
                 .forJob(job).withIdentity("q-s", "d-s")
                 .build();

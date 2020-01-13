@@ -33,6 +33,7 @@ public class QdJob implements Job {
         if(map == null || map.isEmpty()) {
             return;
         }
+        logger.info("抢单账号总数，{}",map.size());
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
             qdService.qd(str,strs[0],Integer.parseInt(strs[1]));

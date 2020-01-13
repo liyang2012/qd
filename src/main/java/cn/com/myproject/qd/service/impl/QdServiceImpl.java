@@ -1,6 +1,7 @@
 package cn.com.myproject.qd.service.impl;
 
 import cn.com.myproject.qd.constant.Passwd;
+import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.model.User;
 import cn.com.myproject.qd.service.ILoginService;
 import cn.com.myproject.qd.service.IQdService;
@@ -71,11 +72,39 @@ public class QdServiceImpl implements IQdService{
 //        postData.put("info_type", info_type);
 //        postData.put("token", token);
         entity = restTemplate.postForEntity(url, e, String.class);
-        logger.info("返回日志：{},{},{}",token,entity.getBody(),System.currentTimeMillis()-l);
+        logger.info("返回日志：{},{},{},{}",phone,token,entity.getBody(),System.currentTimeMillis()-l);
         //处理配额积分不足问题
         if(entity.getBody().contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
             User user = userService.get(phone);
-            loginService.login(phone,user.getPasswd(),user.getNum()+"");
+
+            String _url = "http://www.xtxbc.com/app/reg/login";
+            MultiValueMap<String,String> _map = new LinkedMultiValueMap<String, String>();
+            _map.set("password", user.getPasswd());
+            _map.set("phone", phone);
+            _map.set("registration_id", "");
+            _map.set("device_type", "ios");
+
+            ResponseEntity<String> _entity = null;
+
+            HttpHeaders _headers = new HttpHeaders();
+            _headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
+            _headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+            HttpEntity< MultiValueMap<String,String>> _e = new HttpEntity<>(_map, _headers);
+
+            _entity = restTemplate.postForEntity(_url, _e, String.class);
+            String room = _entity.getBody();
+            JSONObject jo = JSON.parseObject(room);
+            if(jo.getString("code").equals("success")){
+                //获取token
+                String _token = jo.getString("data");
+                Integer _num = user.getNum();
+                qd(phone,_token,_num);
+                Token.put(phone,_token,_num+"");
+                logger.info("配额积分不足再次处理，{}",phone);
+            }else{
+                logger.info("再次登录失败，{}",phone);
+            }
+
         }
 
     }
