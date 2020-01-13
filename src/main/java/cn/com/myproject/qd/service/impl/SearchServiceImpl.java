@@ -96,7 +96,7 @@ public class SearchServiceImpl implements ISearchService {
         }else {
             logger.info("已获取属性，不需要请求...................");
         }
-        logger.info("返回日志：{},{},{}",token,entity.getBody(),System.currentTimeMillis()-l);
+        logger.info("返回日志：{},{}",token,System.currentTimeMillis()-l);
     }
 
 }

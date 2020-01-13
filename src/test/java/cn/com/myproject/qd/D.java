@@ -8,49 +8,10 @@ import java.util.*;
 public class D {
     public static void main(String[] args) throws IOException {
 
-        System.out.println("=====");
+       String str = "{\"code\":\"error\",\"msg\":\"\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3\"}";
+
+        System.out.println(str.contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3"));
 
     }
-    void v1() {
-        for(int i=0;i<1000;i++) {
-            System.out.println("+");
-        }
-    }
 
-    void v2() {
-        int[] i = new int[1000];
-        i[0] = 0;
-        for(int j:i) {
-            System.out.println("+");
-        }
-    }
-
-    void v3() {
-        int i = 1;
-        while(i<1000){
-            System.out.println("-");
-            i++;
-        }
-    }
-
-    void v4( List<Integer> list) {
-        Iterator<Integer> it =  list.iterator();
-        while (it.hasNext()){
-            Integer num = it.next();
-            if (num == 11){
-                it.remove();
-            }else{
-                System.out.println(num);
-            }
-        }
-    }
-    void v5( List<Integer> list) {
-        for(Integer num:list){
-            if (num == 11){
-                list.remove(num);
-            }else{
-                System.out.println(num);
-            }
-        }
-    }
 }

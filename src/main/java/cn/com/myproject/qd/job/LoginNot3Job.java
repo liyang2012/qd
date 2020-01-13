@@ -1,6 +1,5 @@
 package cn.com.myproject.qd.job;
 
-import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.model.User;
 import cn.com.myproject.qd.service.ILoginNotService;
@@ -23,21 +22,19 @@ import java.util.concurrent.Future;
 /**
  * @Author: 上午 判断登录与否
  */
-public class LoginNotJob implements Job {
+public class LoginNot3Job implements Job {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginNotJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginNot3Job.class);
 
 
     @Autowired
     private ILoginService loginService;
 
     @Autowired
-    private IUserService userService;
-
-    @Autowired
     private ILoginNotService loginNotService;
 
-
+    @Autowired
+    private IUserService userService;
 
     /**
      *
@@ -57,7 +54,7 @@ public class LoginNotJob implements Job {
             try {
                 String str = future.get();
                 if(!StringUtils.isEmpty(str)) {
-                    User user = userService.get(str,2);
+                    User user = userService.get(str,3);
                     loginService.login(str,user.getPasswd(),user.getNum()+"");
                 }
             } catch (InterruptedException e) {

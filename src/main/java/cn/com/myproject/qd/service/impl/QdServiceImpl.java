@@ -1,7 +1,10 @@
 package cn.com.myproject.qd.service.impl;
 
 import cn.com.myproject.qd.constant.Passwd;
+import cn.com.myproject.qd.model.User;
+import cn.com.myproject.qd.service.ILoginService;
 import cn.com.myproject.qd.service.IQdService;
+import cn.com.myproject.qd.service.IUserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,9 +27,15 @@ public class QdServiceImpl implements IQdService{
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ILoginService loginService;
+
+    @Autowired
+    private IUserService userService;
+
     @Async("asyncQdServiceExecutor")
     @Override
-    public void qd(String token, int num) {
+    public void qd(String phone,String token, int num) {
         long l = System.currentTimeMillis();
         String url;
         JSONObject postData;
@@ -63,6 +72,11 @@ public class QdServiceImpl implements IQdService{
 //        postData.put("token", token);
         entity = restTemplate.postForEntity(url, e, String.class);
         logger.info("返回日志：{},{},{}",token,entity.getBody(),System.currentTimeMillis()-l);
+        //处理配额积分不足问题
+        if(entity.getBody().contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
+            User user = userService.get(phone);
+            loginService.login(phone,user.getPasswd(),user.getNum()+"");
+        }
 
     }
 }

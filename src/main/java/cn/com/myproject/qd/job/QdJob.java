@@ -35,7 +35,7 @@ public class QdJob implements Job {
         }
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
-            qdService.qd(strs[0],Integer.parseInt(strs[1]));
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
             Thread.sleep(200L);
@@ -45,7 +45,7 @@ public class QdJob implements Job {
         //再试一次
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
-            qdService.qd(strs[0],Integer.parseInt(strs[1]));
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
             Thread.sleep(200L);
@@ -55,7 +55,7 @@ public class QdJob implements Job {
         //再试一次
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
-            qdService.qd(strs[0],Integer.parseInt(strs[1]));
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
             Thread.sleep(200L);
@@ -65,7 +65,7 @@ public class QdJob implements Job {
         //再试一次
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
-            qdService.qd(strs[0],Integer.parseInt(strs[1]));
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
     }
 }

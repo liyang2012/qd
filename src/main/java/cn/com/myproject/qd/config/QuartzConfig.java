@@ -82,7 +82,15 @@ public class QuartzConfig {
             scheduler.scheduleJob(job, trigger);
         }
 
+        job = JobBuilder.newJob(LoginNot3Job.class).withIdentity("q4-1", "d4-1").withDescription("判断是否登录下午").build();
+        trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("50 17 17 * * ?")
+                .withMisfireHandlingInstructionDoNothing())
+                .forJob(job).withIdentity("q4-1", "d4-1")
+                .build();
 
+        if (scheduler.getJobDetail(job.getKey()) == null) {
+            scheduler.scheduleJob(job, trigger);
+        }
 
 
         job = JobBuilder.newJob(TestJob.class).withIdentity("q3", "d3").withDescription("测试").build();

@@ -37,6 +37,11 @@ public class UserServiceImpl implements IUserService {
         return userMapper.get(phone,type);
     }
 
+
+    @Override
+    public User get(String phone) {
+        return userMapper.getByPhone(phone);
+    }
     @Override
     public int delete(Integer id) {
         return userMapper.delete(id);

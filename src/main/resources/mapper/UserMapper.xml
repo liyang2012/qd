@@ -41,6 +41,10 @@
         select * from users where phone = #{phone} and type = #{type}
     </select>
 
+    <select id="getByPhone" resultType="cn.com.myproject.qd.model.User">
+        select * from users where phone = #{phone}
+    </select>
+
     <delete id="delete" >
         delete from users
         where id = #{id}

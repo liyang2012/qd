@@ -14,5 +14,7 @@ public interface IUserService {
 
     User get(String phone,int type);
 
+    User get(String phone);
+
     int delete(Integer id);
 }
