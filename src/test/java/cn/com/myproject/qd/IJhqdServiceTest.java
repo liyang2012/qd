@@ -15,6 +15,7 @@ public class IJhqdServiceTest {
     private IJhqdQdService jhqdQdService;
     @Test
     public void test(){
+
         jhqdQdService.qd("");
     }
 }

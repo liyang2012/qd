@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.job;
 
+import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.constant.TokenS;
 import cn.com.myproject.qd.service.ISearchService;
 import org.quartz.Job;

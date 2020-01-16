@@ -53,7 +53,7 @@ public class TestJob implements Job {
 //            loginService.login(user.getPhone(),user.getPasswd(),user.getNum()+"");
 //        }
 //        Token.clear();
-//        loginSearchService.login("18600890788","1qazxsw23edcp","1");
+//        loginSearchService.login("13548261350","123456","1");
 //        try {
 //            Thread.sleep(1000L);
 //        } catch (InterruptedException e) {

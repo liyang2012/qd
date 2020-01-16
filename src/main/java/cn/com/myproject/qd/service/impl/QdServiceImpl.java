@@ -29,9 +29,6 @@ public class QdServiceImpl implements IQdService{
     private RestTemplate restTemplate;
 
     @Autowired
-    private ILoginService loginService;
-
-    @Autowired
     private IUserService userService;
 
     @Async("asyncQdServiceExecutor")
@@ -39,18 +36,91 @@ public class QdServiceImpl implements IQdService{
     public void qd(String phone,String token, int num) {
         long l = System.currentTimeMillis();
         String url;
-        JSONObject postData;
+
         ResponseEntity<String> entity = null;
-        if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
+        MultiValueMap<String,String> map = null;
+        HttpHeaders headers = null;
+        HttpEntity< MultiValueMap<String,String>> e = null;
+        if(Passwd.goodsId.get()==-999) {
+            url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList";
+            map = new LinkedMultiValueMap<String, String>();
+            map.set("page", "1");
+            map.set("category_id", "-3");
+
+            headers = new HttpHeaders();
+            headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
+            headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+            e = new HttpEntity<>(map, headers);
+
+            entity = restTemplate.postForEntity(url, e, String.class);
+            String room = entity.getBody();
+            JSONObject jo = JSON.parseObject(room);
+            JSONArray ja = jo.getJSONObject("data").getJSONArray("goods_info");
+            for(int i=0;i<ja.size();i++) {
+                JSONObject _jo = ja.getJSONObject(i);
+                if(_jo.getInteger("goods_id") != 59 && _jo.getInteger("goods_id") != 119){
+                    Passwd.goodsId.set( _jo.getInteger("goods_id"));
+                    break;
+                }
+            }
+        }
+        if(Passwd.goodsId.get()==-999) {
+            logger.info("没有获取到商品，{}",System.currentTimeMillis()-l);
             return;
-        }else {
-            logger.info("已获取属性，直接下单...................");
+        }
+        if(Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
+            String str = xiangqing(token);
+            JSONObject jo1 = JSON.parseObject(str).getJSONObject("data");
+            //购买数量
+            int prom_type = 0;
+            int spec_id = 0;
+            try {
+                prom_type = jo1.getInteger("prom_type");
+                spec_id = jo1.getJSONArray("goods_spec_list").getJSONArray(0).getJSONObject(0).getInteger("item_id");
+                Passwd.promType.set(prom_type);
+                Passwd.specId.set(spec_id);
+            } catch (Exception e1) {
+                logger.info("解析详情错误", e1);
+            }
+            logger.info("prom_type={},spce_id={}", prom_type, spec_id);
+            String result = xiadan(num,token);
+            bujiu(result,phone);
+            logger.info("返回日志：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
+            return;
         }
 
+        logger.info("已获取属性，直接下单...................");
+        xiangqing(token);
+        String result = xiadan(num,token);
+        bujiu(result,phone);
+        logger.info("返回日志：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
+
+
+
+    }
+    /**
+     * 查看商品详情
+     * */
+    private String xiangqing(String token) {
+        String url = "http://www.xtxbc.com/app/Cron/wogetGoodsDetail";
+        MultiValueMap<String,String>  map = new LinkedMultiValueMap<String, String>();
+        map.set("token", token);
+        map.set("goods_id", Passwd.goodsId.get()+"");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
+        headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+        HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
+        ResponseEntity<String> entity = restTemplate.postForEntity(url, e, String.class);
+        return entity.getBody();
+    }
+
+    /**
+     * 下单
+     * */
+    private String xiadan(Integer num,String token){
         //下单
         String info_type = "goods";
-        url = "http://www.xtxbc.com/app/Cron/rushtopurchase_new";
-
+        String url = "http://www.xtxbc.com/app/Cron/rushtopurchase_new";
         MultiValueMap<String,String> map = new LinkedMultiValueMap<String, String>();
         map.set("goods_nums", num+"");
         map.set("goods_id", Passwd.goodsId.get()+"");
@@ -63,20 +133,18 @@ public class QdServiceImpl implements IQdService{
         headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
         headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
         HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
-//
-//        postData = new JSONObject();
-//        postData.put("goods_nums", num);
-//        postData.put("goods_id", Passwd.goodsId.get());
-//        postData.put("prom_type", Passwd.promType.get());
-//        postData.put("spec_id", Passwd.specId.get());
-//        postData.put("info_type", info_type);
-//        postData.put("token", token);
-        entity = restTemplate.postForEntity(url, e, String.class);
-        logger.info("返回日志：{},{},{},{}",phone,token,entity.getBody(),System.currentTimeMillis()-l);
-        //处理配额积分不足问题
-        if(entity.getBody().contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
-            User user = userService.get(phone);
 
+        ResponseEntity<String> entity = restTemplate.postForEntity(url, e, String.class);
+
+        return entity.getBody();
+    }
+    /**
+     * 补救
+     * */
+    private void bujiu(String str,String phone) {
+        //处理配额积分不足问题
+        if(str.contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
+            User user = userService.get(phone);
             String _url = "http://www.xtxbc.com/app/reg/login";
             MultiValueMap<String,String> _map = new LinkedMultiValueMap<String, String>();
             _map.set("password", user.getPasswd());
@@ -98,14 +166,14 @@ public class QdServiceImpl implements IQdService{
                 //获取token
                 String _token = jo.getString("data");
                 Integer _num = user.getNum();
-                qd(phone,_token,_num);
+                xiangqing(_token);
+                logger.info("再次查询商品详情");
+                xiadan(_num,_token);
                 Token.put(phone,_token,_num+"");
                 logger.info("配额积分不足再次处理，{}",phone);
             }else{
                 logger.info("再次登录失败，{}",phone);
             }
-
         }
-
     }
 }
