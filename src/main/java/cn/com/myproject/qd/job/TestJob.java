@@ -1,7 +1,8 @@
 package cn.com.myproject.qd.job;
 
+import cn.com.myproject.qd.constant.Ask;
+import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
-import cn.com.myproject.qd.constant.TokenS;
 import cn.com.myproject.qd.model.User;
 import cn.com.myproject.qd.service.*;
 import org.quartz.Job;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author: x2
@@ -33,8 +35,6 @@ public class TestJob implements Job {
     @Autowired
     private IQdService qdService;
 
-    @Autowired
-    private ILoginSearchService loginSearchService;
 
     @Autowired
     private ISearchService searchService;
@@ -47,27 +47,22 @@ public class TestJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("test.............");
-//        Token.clear();
-//        List<User> list = userService.getAll(3);
-//        for(User user:list) {
-//            loginService.login(user.getPhone(),user.getPasswd(),user.getNum()+"");
-//        }
-//        Token.clear();
-//        loginSearchService.login("13548261350","123456","1");
-//        try {
-//            Thread.sleep(1000L);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Map<String,String[]> map = TokenS.get();
+
+//        Map<String,String[]> map = Token.get();
 //        if(map == null || map.isEmpty()) {
 //            return;
 //        }
+//        logger.info("查询账号总数，{}",map.size());
 //        for(String str:map.keySet()) {
 //            String[] strs = map.get(str);
-//            searchService.qd(strs[0]);
+//            searchService.qd(str,strs[0]);
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                logger.error("----",e);
+//            }
 //        }
+
 
     }
 }

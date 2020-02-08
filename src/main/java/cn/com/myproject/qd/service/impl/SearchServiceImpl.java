@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.service.impl;
 
+import cn.com.myproject.qd.constant.Ask;
 import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.service.ISearchService;
 import com.alibaba.fastjson.JSON;
@@ -17,6 +18,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Executable;
+
 /**
  * @author liyang-macbook
  */
@@ -29,44 +32,50 @@ public class SearchServiceImpl implements ISearchService {
 
     @Async("asyncSearchServiceExecutor")
     @Override
-    public void qd(String token) {
+    public void qd(String phone,String token) {
         long l = System.currentTimeMillis();
         String url;
 
         ResponseEntity<String> entity = null;
-        if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
-            url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList";
+        HttpHeaders headers = null;
+        MultiValueMap<String, String> map = null;
+        HttpEntity<MultiValueMap<String, String>> e = null;
+        if(Passwd.goodsId.get()==-999) {
+            url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList_new";
 
-
-            MultiValueMap<String,String> map = new LinkedMultiValueMap<String, String>();
+            map = new LinkedMultiValueMap<String, String>();
             map.set("page", "1");
             map.set("category_id", "-3");
+            map.set("token", token);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-            headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
-            HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
+            headers = new HttpHeaders();
+            headers.set("User-Agent", "1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
+            headers.set("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+            e = new HttpEntity<>(map, headers);
 
             entity = restTemplate.postForEntity(url, e, String.class);
             String room = entity.getBody();
-            JSONObject jo = JSON.parseObject(room);
-            JSONArray ja = jo.getJSONObject("data").getJSONArray("goods_info");
-            for(int i=0;i<ja.size();i++) {
-                JSONObject _jo = ja.getJSONObject(i);
-                if(_jo.getInteger("goods_id") != 59 && _jo.getInteger("goods_id") != 119){
-                    Passwd.goodsId.set( _jo.getInteger("goods_id"));
-                    break;
+            try {
+                JSONObject jo = JSON.parseObject(room);
+                JSONArray ja = jo.getJSONObject("data").getJSONArray("goods_info");
+                for (int i = 0; i < ja.size(); i++) {
+                    JSONObject _jo = ja.getJSONObject(i);
+                    if (_jo.getInteger("goods_id") != 59 && _jo.getInteger("goods_id") != 119) {
+                        Passwd.goodsId.set(_jo.getInteger("goods_id"));
+                        break;
+                    }
                 }
+            }catch (Exception e1){
+                logger.info("解析详情错误1,{},{}",phone,entity.getBody());
             }
-            if(Passwd.goodsId.get()==-999) {
-                logger.info("没有获取到商品，{}",System.currentTimeMillis()-l);
-                return;
-            }
+        }
+        if(Passwd.goodsId.get()==-999) {
+            logger.info("没有获取到商品，{},{}",phone,System.currentTimeMillis()-l);
+            return;
+        }
+        if(Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
             //获取商品详情
             url = "http://www.xtxbc.com/app/Cron/wogetGoodsDetail";
-//            postData = new JSONObject();
-//            postData.put("token", token);
-//            postData.put("goods_id", Passwd.goodsId.get());
 
             map = new LinkedMultiValueMap<String, String>();
             map.set("token", token);
@@ -88,11 +97,10 @@ public class SearchServiceImpl implements ISearchService {
                 Passwd.promType.set(prom_type);
                 Passwd.specId.set(spec_id);
             }catch (Exception e1){
-                logger.info("解析详情错误",e1);
+                logger.info("解析详情错误2");
             }
+            Ask.put(phone);
             logger.info("prom_type={},spce_id={}",prom_type,spec_id);
-        }else {
-            logger.info("已获取属性，不需要请求...................");
         }
         logger.info("返回日志：{},{}",token,System.currentTimeMillis()-l);
     }

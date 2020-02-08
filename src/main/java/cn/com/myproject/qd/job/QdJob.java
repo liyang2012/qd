@@ -39,7 +39,7 @@ public class QdJob implements Job {
             qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
-            Thread.sleep(200L);
+            Thread.sleep(150L);
         } catch (InterruptedException e) {
             logger.error("",e);
         }
@@ -49,7 +49,7 @@ public class QdJob implements Job {
             qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
-            Thread.sleep(200L);
+            Thread.sleep(150L);
         } catch (InterruptedException e) {
             logger.error("",e);
         }
@@ -59,7 +59,37 @@ public class QdJob implements Job {
             qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
         }
         try {
-            Thread.sleep(200L);
+            Thread.sleep(150L);
+        } catch (InterruptedException e) {
+            logger.error("",e);
+        }
+        //再试一次
+        for(String str:map.keySet()) {
+            String[] strs = map.get(str);
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+        }
+        try {
+            Thread.sleep(150L);
+        } catch (InterruptedException e) {
+            logger.error("",e);
+        }
+        //再试一次
+        for(String str:map.keySet()) {
+            String[] strs = map.get(str);
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+        }
+        try {
+            Thread.sleep(150L);
+        } catch (InterruptedException e) {
+            logger.error("",e);
+        }
+        //再试一次
+        for(String str:map.keySet()) {
+            String[] strs = map.get(str);
+            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+        }
+        try {
+            Thread.sleep(150L);
         } catch (InterruptedException e) {
             logger.error("",e);
         }

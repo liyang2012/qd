@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.job;
 
+import cn.com.myproject.qd.constant.Ask;
 import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.model.User;
@@ -42,6 +43,7 @@ public class Login1Job implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("执行登录job..............");
         Token.clear();
+        Ask.clear();
         Passwd.goodsId = new AtomicInteger(-999);
         Passwd.promType = new AtomicInteger(-999);
         Passwd.specId = new AtomicInteger(-999);

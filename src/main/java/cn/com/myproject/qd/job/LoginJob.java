@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.job;
 
+import cn.com.myproject.qd.constant.Ask;
 import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.model.User;
@@ -45,6 +46,7 @@ public class LoginJob implements Job {
         Passwd.promType = new AtomicInteger(-999);
         Passwd.specId = new AtomicInteger(-999);
         Token.clear();
+        Ask.clear();
         List<User> list = userService.getAll(2);
         for(User user:list) {
             loginService.login(user.getPhone(),user.getPasswd(),user.getNum()+"");

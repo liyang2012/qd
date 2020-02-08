@@ -1,7 +1,6 @@
 package cn.com.myproject.qd.job;
 
 import cn.com.myproject.qd.constant.Token;
-import cn.com.myproject.qd.constant.TokenS;
 import cn.com.myproject.qd.service.ISearchService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -30,14 +29,14 @@ public class SearchJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("查询job开始");
-        Map<String,String[]> map = TokenS.get();
+        Map<String,String[]> map = Token.get();
         if(map == null || map.isEmpty()) {
             return;
         }
         logger.info("查询账号总数，{}",map.size());
         for(String str:map.keySet()) {
             String[] strs = map.get(str);
-            searchService.qd(strs[0]);
+            searchService.qd(str,strs[0]);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

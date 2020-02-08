@@ -7,7 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Token {
     private static final Logger logger = LoggerFactory.getLogger(Token.class);
-    private static ConcurrentHashMap<String,String[]> map = new ConcurrentHashMap<>(64);
+    private static ConcurrentHashMap<String,String[]> map = new ConcurrentHashMap<>(128);
+
     public static void put(String phone,String token,String num){
         map.put(phone,new String[]{token,num});
         logger.info("登录token添加{},{},{}",phone,token,num);
@@ -20,7 +21,7 @@ public class Token {
 
     public static void clear() {
         map.clear();
-        map = new ConcurrentHashMap<>(64);
+        map = new ConcurrentHashMap<>(128);
     }
 
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("/luser")
+@RequestMapping("/lluser")
 public class UserController {
 
     @Autowired

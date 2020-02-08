@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.service.impl;
 
+import cn.com.myproject.qd.constant.Ask;
 import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.model.User;
@@ -35,65 +36,18 @@ public class QdServiceImpl implements IQdService{
     @Override
     public void qd(String phone,String token, int num) {
         long l = System.currentTimeMillis();
-        String url;
-
-        ResponseEntity<String> entity = null;
-        MultiValueMap<String,String> map = null;
-        HttpHeaders headers = null;
-        HttpEntity< MultiValueMap<String,String>> e = null;
-        if(Passwd.goodsId.get()==-999) {
-            url = "http://www.xtxbc.com/api/app/new_lists/getStoreGoodsList";
-            map = new LinkedMultiValueMap<String, String>();
-            map.set("page", "1");
-            map.set("category_id", "-3");
-
-            headers = new HttpHeaders();
-            headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-            headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
-            e = new HttpEntity<>(map, headers);
-
-            entity = restTemplate.postForEntity(url, e, String.class);
-            String room = entity.getBody();
-            JSONObject jo = JSON.parseObject(room);
-            JSONArray ja = jo.getJSONObject("data").getJSONArray("goods_info");
-            for(int i=0;i<ja.size();i++) {
-                JSONObject _jo = ja.getJSONObject(i);
-                if(_jo.getInteger("goods_id") != 59 && _jo.getInteger("goods_id") != 119){
-                    Passwd.goodsId.set( _jo.getInteger("goods_id"));
-                    break;
-                }
-            }
-        }
-        if(Passwd.goodsId.get()==-999) {
-            logger.info("没有获取到商品，{}",System.currentTimeMillis()-l);
+        if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
             return;
         }
-        if(Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
-            String str = xiangqing(token);
-            JSONObject jo1 = JSON.parseObject(str).getJSONObject("data");
-            //购买数量
-            int prom_type = 0;
-            int spec_id = 0;
-            try {
-                prom_type = jo1.getInteger("prom_type");
-                spec_id = jo1.getJSONArray("goods_spec_list").getJSONArray(0).getJSONObject(0).getInteger("item_id");
-                Passwd.promType.set(prom_type);
-                Passwd.specId.set(spec_id);
-            } catch (Exception e1) {
-                logger.info("解析详情错误", e1);
-            }
-            logger.info("prom_type={},spce_id={}", prom_type, spec_id);
-            String result = xiadan(num,token);
-            bujiu(result,phone);
-            logger.info("返回日志：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
-            return;
-        }
-
         logger.info("已获取属性，直接下单...................");
-        xiangqing(token);
+        if(!Ask.contain(phone)){
+            xiangqing(token);
+            Ask.put(phone);
+        }
+
         String result = xiadan(num,token);
         bujiu(result,phone);
-        logger.info("返回日志：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
+        logger.info("返回日志2：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
 
 
 

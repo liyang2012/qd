@@ -1,5 +1,5 @@
 package cn.com.myproject.qd.service;
 
 public interface ISearchService {
-    void qd(String token);
+    void qd(String phone,String token);
 }
