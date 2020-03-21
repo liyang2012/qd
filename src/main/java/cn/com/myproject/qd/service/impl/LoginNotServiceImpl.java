@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.service.impl;
 
+import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.service.ILoginNotService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -41,8 +42,8 @@ public class LoginNotServiceImpl implements ILoginNotService {
 
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-        headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+        headers.set("User-Agent", Passwd.userAgent);
+        headers.set("Content-Type",Passwd.contentType);
         HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
 
         ResponseEntity<String> entity = null;

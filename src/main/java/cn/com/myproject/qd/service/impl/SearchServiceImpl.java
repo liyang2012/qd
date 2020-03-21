@@ -49,8 +49,8 @@ public class SearchServiceImpl implements ISearchService {
             map.set("token", token);
 
             headers = new HttpHeaders();
-            headers.set("User-Agent", "1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-            headers.set("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+            headers.set("User-Agent", Passwd.userAgent);
+            headers.set("Content-Type", Passwd.contentType);
             e = new HttpEntity<>(map, headers);
 
             entity = restTemplate.postForEntity(url, e, String.class);
@@ -82,8 +82,8 @@ public class SearchServiceImpl implements ISearchService {
             map.set("goods_id", Passwd.goodsId.get()+"");
 
             headers = new HttpHeaders();
-            headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-            headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+            headers.set("User-Agent",Passwd.userAgent);
+            headers.set("Content-Type",Passwd.contentType);
             e = new HttpEntity<>(map, headers);
 
             entity = restTemplate.postForEntity(url, e, String.class);

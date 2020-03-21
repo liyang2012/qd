@@ -61,8 +61,8 @@ public class QdServiceImpl implements IQdService{
         map.set("token", token);
         map.set("goods_id", Passwd.goodsId.get()+"");
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-        headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+        headers.set("User-Agent",Passwd.userAgent);
+        headers.set("Content-Type",Passwd.contentType);
         HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
         ResponseEntity<String> entity = restTemplate.postForEntity(url, e, String.class);
         return entity.getBody();
@@ -84,8 +84,8 @@ public class QdServiceImpl implements IQdService{
         map.set("token", token);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-        headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+        headers.set("User-Agent",Passwd.userAgent);
+        headers.set("Content-Type",Passwd.contentType);
         HttpEntity< MultiValueMap<String,String>> e = new HttpEntity<>(map, headers);
 
         ResponseEntity<String> entity = restTemplate.postForEntity(url, e, String.class);
@@ -109,8 +109,8 @@ public class QdServiceImpl implements IQdService{
             ResponseEntity<String> _entity = null;
 
             HttpHeaders _headers = new HttpHeaders();
-            _headers.set("User-Agent","1.0.38 rv:0.0.1 (iPhone; iOS 13.3; zh_CN)");
-            _headers.set("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+            _headers.set("User-Agent",Passwd.userAgent);
+            _headers.set("Content-Type",Passwd.contentType);
             HttpEntity< MultiValueMap<String,String>> _e = new HttpEntity<>(_map, _headers);
 
             _entity = restTemplate.postForEntity(_url, _e, String.class);

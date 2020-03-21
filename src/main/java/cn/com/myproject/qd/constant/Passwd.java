@@ -19,4 +19,7 @@ public class Passwd {
 
 
     public static AtomicInteger goodsId298 = new AtomicInteger(-999);
+
+    public static final String userAgent = "1.0.43 rv:0.0.1 (iPhone; iOS 13.3.1; zh_CN)";
+    public static final String contentType = "application/x-www-form-urlencoded; charset=utf-8";
 }

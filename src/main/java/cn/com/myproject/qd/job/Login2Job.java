@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 晚上登录
  * @Author: x2
  * @Date: 2019/9/2 15:15
  */
@@ -40,7 +41,7 @@ public class Login2Job implements Job {
      */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("执行登录job..............");
+        logger.info("执行晚上登录job..............");
         Token.clear();
         Ask.clear();
         Passwd.goodsId = new AtomicInteger(-999);
