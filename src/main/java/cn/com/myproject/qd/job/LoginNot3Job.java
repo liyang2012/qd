@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -46,8 +47,8 @@ public class LoginNot3Job implements Job {
         logger.info("执行判断登录与否job..............");
         ConcurrentHashMap<String,String[]> map = Token.get();
         List<Future<String>> futures = new ArrayList<>();
-        for(String str : map.keySet()) {
-            futures.add(loginNotService.login(str,map.get(str)[0]));
+        for(Map.Entry<String, String[]> entry:map.entrySet()) {
+            futures.add(loginNotService.login(entry.getKey(),entry.getValue()[0]));
         }
         //重新登录
         for(Future<String> future : futures){

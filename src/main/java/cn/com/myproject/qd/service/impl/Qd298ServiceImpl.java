@@ -22,7 +22,7 @@ public class Qd298ServiceImpl implements IQd298Service{
     @Autowired
     private RestTemplate restTemplate;
 
-    @Async("asyncQd298ServiceExecutor")
+   // @Async("asyncQd298ServiceExecutor")
     @Override
     public void qd(String token, int num) {
         long l = System.currentTimeMillis();

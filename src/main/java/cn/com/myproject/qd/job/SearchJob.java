@@ -34,9 +34,8 @@ public class SearchJob implements Job {
             return;
         }
         logger.info("查询账号总数，{}",map.size());
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            searchService.qd(str,strs[0]);
+        for(Map.Entry<String, String[]> entry:map.entrySet()) {
+            searchService.qd(entry.getKey(),entry.getValue()[0]);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

@@ -27,30 +27,30 @@ public class IQdServiceTest {
     public void test(){
         Token.clear();
 
-        loginService.login("15136753629","a123456b","2");
-        Passwd.goodsId.set(318);
-
-        Map<String,String[]> map = Token.get();
-        if(map == null || map.isEmpty()) {
-            return;
-        }
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
-
-        Passwd.goodsId.set(315);
-
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
-
-        Passwd.goodsId.set(312);
-
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
+        loginService.login("15136753629","a123456.","2");
+//        Passwd.goodsId.set(318);
+//
+//        Map<String,String[]> map = Token.get();
+//        if(map == null || map.isEmpty()) {
+//            return;
+//        }
+//        for(String str:map.keySet()) {
+//            String[] strs = map.get(str);
+//            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+//        }
+//
+//        Passwd.goodsId.set(315);
+//
+//        for(String str:map.keySet()) {
+//            String[] strs = map.get(str);
+//            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+//        }
+//
+//        Passwd.goodsId.set(312);
+//
+//        for(String str:map.keySet()) {
+//            String[] strs = map.get(str);
+//            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+//        }
     }
 }

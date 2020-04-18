@@ -19,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Executable;
+import java.util.Collections;
 
 /**
  * @author liyang-macbook
@@ -93,6 +94,10 @@ public class SearchServiceImpl implements ISearchService {
             int spec_id = 0;
             try {
                 prom_type = jo1.getInteger("prom_type");
+                JSONArray _ja = jo1.getJSONArray("goods_spec_list").getJSONArray(0);
+                for(int i=0;i<_ja.size();i++) {
+                    Passwd.specIdSet.add(_ja.getJSONObject(i).getInteger("item_id"));
+                }
                 spec_id = jo1.getJSONArray("goods_spec_list").getJSONArray(0).getJSONObject(0).getInteger("item_id");
                 Passwd.promType.set(prom_type);
                 Passwd.specId.set(spec_id);

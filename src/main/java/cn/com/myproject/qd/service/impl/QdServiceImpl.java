@@ -22,6 +22,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Iterator;
+
 @Service
 public class QdServiceImpl implements IQdService{
     private static final Logger logger = LoggerFactory.getLogger(QdServiceImpl.class);
@@ -34,9 +36,9 @@ public class QdServiceImpl implements IQdService{
 
     @Async("asyncQdServiceExecutor")
     @Override
-    public void qd(String phone,String token, int num) {
+    public void qd(String phone,String token,Integer num) {
         long l = System.currentTimeMillis();
-        if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999 || Passwd.specId.get()==-999) {
+        if(Passwd.goodsId.get()==-999 || Passwd.promType.get()==-999) {
             return;
         }
         logger.info("已获取属性，直接下单...................");
@@ -44,13 +46,13 @@ public class QdServiceImpl implements IQdService{
             xiangqing(token);
             Ask.put(phone);
         }
-
-        String result = xiadan(num,token);
-        bujiu(result,phone);
-        logger.info("返回日志2：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
-
-
-
+        Iterator<Integer> iterator = Passwd.specIdSet.iterator();
+        while(iterator.hasNext()) {
+            int specId = iterator.next();
+            String result = xiadan(num,token,specId);
+            bujiu(result,phone,specId);
+            logger.info("返回日志2：{},{},{},{}",phone,token,result,System.currentTimeMillis()-l);
+        }
     }
     /**
      * 查看商品详情
@@ -71,7 +73,7 @@ public class QdServiceImpl implements IQdService{
     /**
      * 下单
      * */
-    private String xiadan(Integer num,String token){
+    private String xiadan(Integer num,String token,Integer specId){
         //下单
         String info_type = "goods";
         String url = "http://www.xtxbc.com/app/Cron/rushtopurchase_new";
@@ -79,7 +81,7 @@ public class QdServiceImpl implements IQdService{
         map.set("goods_nums", num+"");
         map.set("goods_id", Passwd.goodsId.get()+"");
         map.set("prom_type", Passwd.promType.get()+"");
-        map.set("spec_id", Passwd.specId.get()+"");
+        map.set("spec_id", specId+"");
         map.set("info_type", info_type);
         map.set("token", token);
 
@@ -95,7 +97,7 @@ public class QdServiceImpl implements IQdService{
     /**
      * 补救
      * */
-    private void bujiu(String str,String phone) {
+    private void bujiu(String str,String phone,Integer specId) {
         //处理配额积分不足问题
         if(str.contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
             User user = userService.get(phone);
@@ -122,7 +124,7 @@ public class QdServiceImpl implements IQdService{
                 Integer _num = user.getNum();
                 xiangqing(_token);
                 logger.info("再次查询商品详情");
-                xiadan(_num,_token);
+                xiadan(_num,_token,specId);
                 Token.put(phone,_token,_num+"");
                 logger.info("配额积分不足再次处理，{}",phone);
             }else{

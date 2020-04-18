@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ *
+ *
+ * @author hl
+ * */
 public class Token {
     private static final Logger logger = LoggerFactory.getLogger(Token.class);
     private static ConcurrentHashMap<String,String[]> map = new ConcurrentHashMap<>(128);

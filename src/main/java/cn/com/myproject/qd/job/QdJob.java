@@ -1,5 +1,6 @@
 package cn.com.myproject.qd.job;
 
+import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.service.IQdService;
 import org.quartz.Job;
@@ -34,69 +35,27 @@ public class QdJob implements Job {
             return;
         }
         logger.info("抢单账号总数，{}",map.size());
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+
+        for(Map.Entry<String, String[]> entry:map.entrySet()) {
+            qdService.qd(entry.getKey(), entry.getValue()[0], Integer.parseInt(entry.getValue()[1]));
         }
         try {
-            Thread.sleep(150L);
+            Thread.sleep(300L);
         } catch (InterruptedException e) {
             logger.error("",e);
         }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+        for(Map.Entry<String, String[]> entry:map.entrySet()) {
+            qdService.qd(entry.getKey(), entry.getValue()[0], Integer.parseInt(entry.getValue()[1]));
         }
         try {
-            Thread.sleep(150L);
+            Thread.sleep(300L);
         } catch (InterruptedException e) {
             logger.error("",e);
         }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
+        for(Map.Entry<String, String[]> entry:map.entrySet()) {
+            qdService.qd(entry.getKey(), entry.getValue()[0], Integer.parseInt(entry.getValue()[1]));
         }
-        try {
-            Thread.sleep(150L);
-        } catch (InterruptedException e) {
-            logger.error("",e);
-        }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
-        try {
-            Thread.sleep(150L);
-        } catch (InterruptedException e) {
-            logger.error("",e);
-        }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
-        try {
-            Thread.sleep(150L);
-        } catch (InterruptedException e) {
-            logger.error("",e);
-        }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
-        try {
-            Thread.sleep(150L);
-        } catch (InterruptedException e) {
-            logger.error("",e);
-        }
-        //再试一次
-        for(String str:map.keySet()) {
-            String[] strs = map.get(str);
-            qdService.qd(str,strs[0],Integer.parseInt(strs[1]));
-        }
+
+
     }
 }

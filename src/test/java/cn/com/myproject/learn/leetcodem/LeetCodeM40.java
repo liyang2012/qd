@@ -1,4 +1,4 @@
-package cn.com.myproject.learn.leetcode;
+package cn.com.myproject.learn.leetcodem;
 
 import java.util.*;
 

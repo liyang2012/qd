@@ -59,6 +59,7 @@ public class LoginServiceImpl implements ILoginService {
             //获取token
             String token = jo.getString("data");
             Token.put(phone,token,num);
+            logger.info("登录成功，{}：{}",phone,token);
         }else{
             logger.info("登录失败，{}",phone);
         }
