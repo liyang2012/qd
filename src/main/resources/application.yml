@@ -1,6 +1,6 @@
 spring:
   application:
-    name: duck_td
+    name: qd
   quartz:
     #相关属性配置
     properties:
@@ -28,7 +28,7 @@ spring:
     url: jdbc:mysql://localhost:3306/qd?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&allowMultiQueries=true
     username: root
     #password: 123456
-    password: Aa123456.
+    password: Root.123
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
   freemarker:

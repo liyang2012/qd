@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author ly
+ * @author xx
  */
 @Service
 public class UserServiceImpl implements IUserService {
@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public User get(String phone) {
+    public List<User> get(String phone) {
         return userMapper.getByPhone(phone);
     }
     @Override

@@ -100,7 +100,7 @@ public class QdServiceImpl implements IQdService{
     private void bujiu(String str,String phone,Integer specId) {
         //处理配额积分不足问题
         if(str.contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3")) {
-            User user = userService.get(phone);
+            User user = userService.get(phone).get(0);
             String _url = "http://www.xtxbc.com/app/reg/login";
             MultiValueMap<String,String> _map = new LinkedMultiValueMap<String, String>();
             _map.set("password", user.getPasswd());

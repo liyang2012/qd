@@ -25,7 +25,7 @@ public interface UserMapper {
 
     User get(@Param("phone") String phone,@Param("type") int type);
 
-    User getByPhone(@Param("phone") String phone);
+    List<User> getByPhone(@Param("phone") String phone);
 
     int delete(Integer id);
 

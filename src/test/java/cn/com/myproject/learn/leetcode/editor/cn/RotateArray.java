@@ -32,18 +32,23 @@
 
   
 package cn.com.myproject.learn.leetcode.editor.cn;
+
+import java.util.Arrays;
+
 public class RotateArray{
     public static void main(String[] args) {
        Solution solution = new RotateArray().new Solution();
        int[] nums = {1,2,3,4,5,6,7};
        solution.rotate(nums,2);
-       for (int i : nums) {
-           System.out.println(i);
-       }
-
+       System.out.println(Arrays.toString(nums));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        /**
+         * 暴力
+         * @param nums
+         * @param k
+         */
         public void rotate1(int[] nums, int k) {
             if (nums.length == 0 || k == 0) {
                 return;
@@ -59,6 +64,12 @@ public class RotateArray{
                 }
             }
         }
+
+        /***
+         * 反转方式
+         * @param nums
+         * @param k
+         */
         public void rotate(int[] nums, int k) {
             k %= nums.length;
             reverse(nums, 0, nums.length-1);

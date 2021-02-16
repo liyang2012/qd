@@ -37,6 +37,11 @@ public class ClimbingStairs{
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
 
+        /**
+         * 动态规划
+         * @param n
+         * @return
+         */
         public int climbStairs(int n) {
             if(n<3) {
                 return n;
@@ -49,7 +54,11 @@ public class ClimbingStairs{
             }
             return result;
         }
-
+        /**
+         * 动态规划
+         * @param n
+         * @return
+         */
         public int climbStairs1(int n) {
             if(n<3) {
                 return n;
@@ -62,6 +71,18 @@ public class ClimbingStairs{
                 dp[i] = dp[i-1]+dp[i-2];
             }
             return dp[n];
+        }
+
+        /**
+         * 数学
+         * FIXME
+         * @param n
+         * @return
+         */
+        public int climbStairs2(int n) {
+            double sqrt5=Math.sqrt(5);
+            double fibn=Math.pow((1+sqrt5)/2,n+1)-Math.pow((1-sqrt5)/2,n+1);
+            return (int)(fibn/sqrt5);
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)

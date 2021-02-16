@@ -1,0 +1,70 @@
+//Given a collection of numbers that might contain duplicates, return all possib
+//le unique permutations. 
+//
+// Example: 
+//
+// 
+//Input: [1,1,2]
+//Output:
+//[
+//  [1,1,2],
+//  [1,2,1],
+//  [2,1,1]
+//]
+// 
+// Related Topics 回溯算法
+
+  
+package cn.com.myproject.learn.leetcode.editor.cn;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+public class PermutationsIi{
+    public static void main(String[] args) {
+       Solution solution = new PermutationsIi().new Solution();
+    }
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+
+        public List<List<Integer>> result = new LinkedList<>();
+
+        public List<List<Integer>> permuteUnique(int[] nums) {
+            if(nums.length == 0){
+                return result;
+            }
+            //首先给数组排序
+            Arrays.sort(nums);
+            findUnique(nums,0,new boolean[nums.length],new LinkedList<Integer>());
+            return result;
+        }
+        public void findUnique(int[] nums, int index, boolean[] visited,LinkedList<Integer> trace){
+            //结束条件
+            if(trace.size() == nums.length){
+                result.add(new LinkedList(trace));
+                return ;
+            }
+            //选择列表
+            for(int i = 0; i<nums.length; i++){
+                //其次，我们已经选择过的不需要再放进去了
+                if(visited[i]) {
+                    continue;
+                }
+                //接下来，如果当前节点与他的前一个节点一样，并其他的前一个节点已经被遍历过了，那我们也就不需要了。
+                if(i>0 && nums[i] == nums[i-1] && visited[i-1]) {
+                    continue;
+                }
+                //做出选择
+                trace.add(nums[i]);
+                visited[i] = true;
+                findUnique(nums,i+1,visited,trace);
+                //撤销选择
+                trace.removeLast();
+                visited[i] = false;
+            }
+        }
+    }
+    //leetcode submit region end(Prohibit modification and deletion)
+
+}

@@ -28,6 +28,14 @@ public class MergeSortedArray{
     }
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        /**
+         *
+         * 暴力解法
+         * @param nums1
+         * @param m
+         * @param nums2
+         * @param n
+         */
         public void merge(int[] nums1, int m, int[] nums2, int n) {
             int i = 0, j = 0;
             while (j < n) {
@@ -38,6 +46,7 @@ public class MergeSortedArray{
                     continue;
                 }
                 if (nums2[j] < nums1[i]) {
+                    //后移
                     for (int k = m + j; k > i; k--) {
                         nums1[k] = nums1[k-1];
                     }
@@ -47,6 +56,14 @@ public class MergeSortedArray{
                 i++;
             }
         }
+
+        /***
+         * 双指针，从前往后
+         * @param nums1
+         * @param m
+         * @param nums2
+         * @param n
+         */
         public void merge1 (int[] nums1, int m, int[] nums2, int n) {
             int[] nums1_copy = new int[m];
             System.arraycopy(nums1, 0, nums1_copy, 0, m);
@@ -60,11 +77,28 @@ public class MergeSortedArray{
             }
 
             if (p1 < m) {
-                System.arraycopy(nums1_copy, p1, nums1, p1+p2, m + n - p1 - p2);
+                System.arraycopy(nums1_copy, p1, nums1, p1 + p2, m + n - p1 - p2);
             }
             if (p2 < n) {
                 System.arraycopy(nums2, p2, nums1, p1 + p2, m + n - p1 - p2);
             }
+        }
+
+        /***
+         * 双指针，从后往前
+         * @param nums1
+         * @param m
+         * @param nums2
+         * @param n
+         */
+        public void merge2 (int[] nums1, int m, int[] nums2, int n) {
+            int p = m + n - 1;
+            int p1  = m - 1;
+            int p2 = n - 1;
+            while (p1 < m && p2 < n){
+                nums1[p--] = (nums1[p1] < nums2[p2]) ? nums2[p2--] : nums1[p1--];
+            }
+            System.arraycopy(nums2, 0, nums1, 0, p2+1);
         }
     }
 

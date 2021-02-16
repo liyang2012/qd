@@ -53,6 +53,11 @@ public class RemoveDuplicatesFromSortedArray{
     }
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        /**
+         * 双指针
+         * @param nums
+         * @return
+         */
         public int removeDuplicates(int[] nums) {
             if (nums.length == 0) {
                 return 0;
