@@ -64,9 +64,9 @@ public class QdApplication {
 			// 开始设置连接池
 			PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 			// 最大连接数500
-			poolingHttpClientConnectionManager.setMaxTotal(600);
+			poolingHttpClientConnectionManager.setMaxTotal(1000);
 			// 同路由并发数100
-			poolingHttpClientConnectionManager.setDefaultMaxPerRoute(150);
+			poolingHttpClientConnectionManager.setDefaultMaxPerRoute(200);
 			httpClientBuilder.setConnectionManager(poolingHttpClientConnectionManager);
 			// 重试次数
 			httpClientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
