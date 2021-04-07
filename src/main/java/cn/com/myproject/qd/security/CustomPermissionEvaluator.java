@@ -1,8 +1,9 @@
 package cn.com.myproject.qd.security;
 
 
-import com.hnqianxu.rzxx.constant.BaseConstant;
-import com.hnqianxu.rzxx.redis.IRedisService;
+
+import cn.com.myproject.qd.constant.BaseConstant;
+import cn.com.myproject.qd.redis.IRedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package cn.com.myproject.qd.weixin.mp.config;
 
-import com.hnqianxu.djzs.weixin.mp.utils.JsonUtils;
+import cn.com.myproject.qd.weixin.mp.utils.JsonUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

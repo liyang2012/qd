@@ -1,8 +1,9 @@
 package cn.com.myproject.qd.weixin.mp.config;
 
 
-import com.hnqianxu.djzs.redis.IRedisService;
-import com.hnqianxu.djzs.weixin.mp.handle.*;
+
+import cn.com.myproject.qd.redis.IRedisService;
+import cn.com.myproject.qd.weixin.mp.handle.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;

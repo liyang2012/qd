@@ -1,6 +1,7 @@
 package cn.com.myproject.qd.weixin.mp.config;
 
-import com.hnqianxu.djzs.redis.IRedisService;
+
+import cn.com.myproject.qd.redis.IRedisService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.common.enums.TicketType;

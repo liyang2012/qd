@@ -1,7 +1,8 @@
 package cn.com.myproject.qd.weixin.mp.handle;
 
 
-import com.hnqianxu.djzs.weixin.mp.utils.JsonUtils;
+
+import cn.com.myproject.qd.weixin.mp.utils.JsonUtils;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;

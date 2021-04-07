@@ -1,7 +1,7 @@
 package cn.com.myproject.qd.weixin.mp.handle;
 
-import com.hnqianxu.djzs.weixin.mp.builder.TextBuilder;
-import com.hnqianxu.djzs.weixin.mp.utils.JsonUtils;
+import cn.com.myproject.qd.weixin.mp.builder.TextBuilder;
+import cn.com.myproject.qd.weixin.mp.utils.JsonUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
