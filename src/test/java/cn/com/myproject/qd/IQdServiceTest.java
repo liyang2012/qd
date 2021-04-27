@@ -5,15 +5,13 @@ import cn.com.myproject.qd.constant.Passwd;
 import cn.com.myproject.qd.constant.Token;
 import cn.com.myproject.qd.service.ILoginService;
 import cn.com.myproject.qd.service.IQdService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class IQdServiceTest {
 
