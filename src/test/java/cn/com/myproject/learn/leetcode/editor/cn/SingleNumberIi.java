@@ -33,7 +33,7 @@ public class SingleNumberIi{
          * @param nums
          * @return
          */
-        public int singleNumber(int[] nums) {
+        public int singleNumber1(int[] nums) {
             int seenOnce = 0, seenTwice = 0;
             for (int num : nums) {
                 seenOnce = -seenTwice & (seenOnce ^ num);
@@ -41,6 +41,21 @@ public class SingleNumberIi{
             }
             return seenOnce;
         }
+
+        public int singleNumber(int[] nums) {
+            int ans = 0;
+            for (int i = 0; i < 32; ++i) {
+                int total = 0;
+                for (int num: nums) {
+                    total += ((num >> i) & 1);
+                }
+                if (total % 3 != 0) {
+                    ans |= (1 << i);
+                }
+            }
+            return ans;
+        }
+        
     }
     //leetcode submit region end(Prohibit modification and deletion)
 
