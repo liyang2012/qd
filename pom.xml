@@ -173,6 +173,13 @@
 <!--			<artifactId>javacv-platform</artifactId>-->
 <!--			<version>1.5.3</version>-->
 <!--		</dependency>-->
+		<dependency>
+			<groupId>com.taobao.trace</groupId>
+			<artifactId>taobao-sdk-java</artifactId>
+			<version>1608514155259-20211008</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/taobao-sdk-java-auto_1608514155259-20211008.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

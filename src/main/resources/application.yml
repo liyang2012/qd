@@ -54,8 +54,8 @@ server:
 logging:
   level:
     ROOT: info
-  file: qd.log
-
+  file:
+    name: qd.log
 
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
