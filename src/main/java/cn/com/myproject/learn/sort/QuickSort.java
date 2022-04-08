@@ -10,8 +10,10 @@ public class QuickSort {
         }
         i = low;
         j = hight;
-        index = a[i]; // 用子表的第一个记录做基准
-        while (i < j) { // 从表的两端交替向中间扫描
+        // 用子表的第一个记录做基准
+        index = a[i];
+        // 从表的两端交替向中间扫描
+        while (i < j) {
             while (i < j && a[j] >= index) {
                 j--;
             }
