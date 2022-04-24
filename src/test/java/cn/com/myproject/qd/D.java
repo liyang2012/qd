@@ -7,11 +7,19 @@ import java.util.*;
 
 public class D {
     public static void main(String[] args) throws IOException {
+        D d = new D();
+        d.s(1);
+        System.out.println("-------------");
+        d.s(0);
 
-       String str = "{\"code\":\"error\",\"msg\":\"\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3\"}";
+    }
 
-        System.out.println(str.contains("\\u914d\\u989d\\u79ef\\u5206\\u4e0d\\u8db3"));
-
+    private void s(int i) {
+        if (i == 1) {
+            System.out.println("1");
+            return;
+        }
+        System.out.println("==");
     }
 
 }
