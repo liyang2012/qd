@@ -1,0 +1,57 @@
+> Problem: [1991. 找到数组的中间位置](https://leetcode.cn/problems/find-the-middle-index-in-array/description/)
+
+[TOC]
+
+# 思路：前缀和
+
+1. 遍历一遍求出总和 `sum`；
+2. 遍历第二遍求中心索引左半和 `leftSum`；
+   - 同时根据 `sum` 和 `leftSum`  计算中心索引右半和，并判断其和 `leftSum` 是否相同；
+   - 相同则返回数组的一个下标，即为**中心下标**。
+3. 没有 **中心下标**，返回 `-1` ;
+
+# Code
+
+* []
+
+```Java
+class Solution {
+    public int findMiddleIndex(int[] nums) {
+        int sum = 0;
+        for (int num : nums) sum += num; // 求和
+        int leftSum = 0;    // 中心索引左半和
+        for (int i = 0; i < nums.length; i++) {
+            if(leftSum == sum - leftSum - nums[i]) return i;
+            leftSum += nums[i];
+        }
+        return -1;
+    }
+}
+```
+
+* []
+
+```C++
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int sum = 0;
+        for (int num : nums) sum += num; // 求和
+        int leftSum = 0;    // 中心索引左半和
+        for (int i = 0; i < nums.size(); i++) {
+            if(leftSum == sum - leftSum - nums[i]) return i;
+            leftSum += nums[i];
+        }
+        return -1;
+    }
+};
+```
+
+# 复杂度分析：
+
+- **时间复杂度**：$O(n)$，其中 `n` 为数组的长度。
+- **空间复杂度**：$O(1)$。
+
+> 放弃一件事很容易，每天能坚持一件事一定很酷，一起每日一题吧！
+
+**关注我[LeetCode主页](https://leetcode.cn/u/shen-du-rm/) /  [CSDN—力扣专栏](http://t.csdn.cn/kQLJO)，每日更新！**
